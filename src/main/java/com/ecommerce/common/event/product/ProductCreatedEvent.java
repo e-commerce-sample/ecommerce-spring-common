@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+import static com.ecommerce.common.event.DomainEventType.PRODUCT_CREATED;
+
 
 public class ProductCreatedEvent extends ProductEvent {
     private final String name;
@@ -30,6 +32,13 @@ public class ProductCreatedEvent extends ProductEvent {
         this.createdAt = createdAt;
     }
 
+    public ProductCreatedEvent(String productId, String name, String description, BigDecimal price, Instant createdAt) {
+        super(productId, PRODUCT_CREATED);
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.createdAt = createdAt;
+    }
 
     public String getName() {
         return name;

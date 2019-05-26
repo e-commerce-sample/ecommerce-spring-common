@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+import static com.ecommerce.common.event.DomainEventType.ORDER_CREATED;
+
 public class OrderCreatedEvent extends OrderEvent {
     private final BigDecimal price;
     private final Instant createdAt;
@@ -27,6 +29,12 @@ public class OrderCreatedEvent extends OrderEvent {
         this.address = address;
     }
 
+    public OrderCreatedEvent(String orderId, BigDecimal price, Address address, Instant createdAt) {
+        super(orderId, ORDER_CREATED);
+        this.price = price;
+        this.createdAt = createdAt;
+        this.address = address;
+    }
 
     public BigDecimal getPrice() {
         return price;

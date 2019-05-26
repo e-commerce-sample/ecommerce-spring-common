@@ -8,19 +8,19 @@ import java.util.Map;
 import static com.google.common.collect.Maps.newHashMap;
 import static org.apache.commons.collections4.MapUtils.isEmpty;
 
-public class ErrorRepresentation extends RequestIdAwareRepresentation {
+class ErrorRepresentation extends RequestIdAwareRepresentation {
     private final ErrorDetail error;
 
-    public ErrorRepresentation(AppException ex, String path) {
+    ErrorRepresentation(AppException ex, String path) {
         ErrorEnum error = ex.getError();
         this.error = new ErrorDetail(error.getCode(), error.getStatus(), error.getMessage(), path, ex.getData());
     }
 
-    public ErrorRepresentation(ErrorDetail error) {
+    ErrorRepresentation(ErrorDetail error) {
         this.error = error;
     }
 
-    public ErrorDetail getError() {
+    ErrorDetail getError() {
         return error;
     }
 

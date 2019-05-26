@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
 
+import static com.ecommerce.common.event.DomainEventType.ORDER_PRODUCT_CHANGED;
+
 public class OrderProductChangedEvent extends OrderEvent {
     private final String productId;
     private final int originCount;
@@ -20,6 +22,13 @@ public class OrderProductChangedEvent extends OrderEvent {
                                     @JsonProperty("originCount") int originCount,
                                     @JsonProperty("newCount") int newCount) {
         super(orderId, _id, _type, _createdAt);
+        this.productId = productId;
+        this.originCount = originCount;
+        this.newCount = newCount;
+    }
+
+    public OrderProductChangedEvent(String orderId, String productId, int originCount, int newCount) {
+        super(orderId, ORDER_PRODUCT_CHANGED);
         this.productId = productId;
         this.originCount = originCount;
         this.newCount = newCount;

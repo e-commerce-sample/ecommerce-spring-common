@@ -19,8 +19,8 @@ public abstract class InventoryEvent extends DomainEvent {
         this.productId = productId;
     }
 
-    protected InventoryEvent(String productId, DomainEventType _type) {
-        super(_type);
+    protected InventoryEvent(String productId, DomainEventType eventType) {
+        super(eventType);
         this.productId = productId;
     }
 

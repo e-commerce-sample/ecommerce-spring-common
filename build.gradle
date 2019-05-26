@@ -42,7 +42,7 @@ dependencies {
     compile("mysql:mysql-connector-java:8.0.15")
     compile('io.jsonwebtoken:jjwt:0.9.1')
     compile("org.flywaydb:flyway-core")
-    implementation('com.google.guava:guava:27.0.1-jre')
+    compile('com.google.guava:guava:27.0.1-jre')
     compile('commons-io:commons-io:2.6')
     compile('org.apache.commons:commons-lang3')
     compile('org.apache.commons:commons-collections4:4.2')
@@ -66,8 +66,6 @@ dependencies {
     testCompile('org.junit.jupiter:junit-jupiter-engine')
     testCompile('org.mockito:mockito-junit-jupiter:2.26.0')
 }
-
-
 
 
 configurations.all {
@@ -95,8 +93,11 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.ecommerce'
             artifactId = 'common'
-            version = '1.0-SNAPSHOT'
+            version = '0.1-SNAPSHOT'
             from components.java
+            artifact sourcesJar {
+                classifier "sources"
+            }
         }
     }
 
@@ -116,7 +117,6 @@ publishing {
 
 
 apply from: "${rootProject.projectDir}/gradle/idea.gradle"
-//apply from: "${rootProject.projectDir}/gradle/dependency-check/dependency-check.gradle"
 apply from: "${rootProject.projectDir}/gradle/spotbugs/spotbugs.gradle"
 apply from: "${rootProject.projectDir}/gradle/checkstyle/checkstyle.gradle"
 apply from: "${rootProject.projectDir}/gradle/git-hooks/git-hooks.gradle"

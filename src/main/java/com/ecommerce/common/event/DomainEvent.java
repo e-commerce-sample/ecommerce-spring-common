@@ -1,9 +1,11 @@
 package com.ecommerce.common.event;
 
+import com.ecommerce.common.event.inventory.InventoryChangedEvent;
 import com.ecommerce.common.event.order.OrderAddressChangedEvent;
 import com.ecommerce.common.event.order.OrderCreatedEvent;
 import com.ecommerce.common.event.order.OrderPaidEvent;
 import com.ecommerce.common.event.order.OrderProductChangedEvent;
+import com.ecommerce.common.event.product.ProductCreatedEvent;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -22,7 +24,9 @@ import static java.time.Instant.now;
         @Type(value = OrderCreatedEvent.class, name = "ORDER_CREATED"),
         @Type(value = OrderAddressChangedEvent.class, name = "ORDER_ADDRESS_CHANGED"),
         @Type(value = OrderPaidEvent.class, name = "ORDER_PAID"),
-        @Type(value = OrderProductChangedEvent.class, name = "ORDER_PRODUCT_CHANGED")
+        @Type(value = OrderProductChangedEvent.class, name = "ORDER_PRODUCT_CHANGED"),
+        @Type(value = ProductCreatedEvent.class, name = "PRODUCT_CREATED"),
+        @Type(value = InventoryChangedEvent.class, name = "INVENTORY_CHANGED")
 
 })
 public abstract class DomainEvent {
