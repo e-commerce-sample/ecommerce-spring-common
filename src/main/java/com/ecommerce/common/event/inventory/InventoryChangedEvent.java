@@ -12,7 +12,7 @@ public class InventoryChangedEvent extends InventoryEvent {
     private final int remains;
 
     @JsonCreator
-    public InventoryChangedEvent(@JsonProperty("_id") String _id,
+    private InventoryChangedEvent(@JsonProperty("_id") String _id,
                                  @JsonProperty("_type") DomainEventType _type,
                                  @JsonProperty("_createdAt") Instant _createdAt,
                                  @JsonProperty("productId") String productId,

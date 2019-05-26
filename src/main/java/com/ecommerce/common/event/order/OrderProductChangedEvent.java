@@ -14,7 +14,7 @@ public class OrderProductChangedEvent extends OrderEvent {
     private final int newCount;
 
     @JsonCreator
-    public OrderProductChangedEvent(@JsonProperty("_id") String _id,
+    private OrderProductChangedEvent(@JsonProperty("_id") String _id,
                                     @JsonProperty("_type") DomainEventType _type,
                                     @JsonProperty("_createdAt") Instant _createdAt,
                                     @JsonProperty("orderId") String orderId,
