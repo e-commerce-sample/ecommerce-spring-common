@@ -1,0 +1,124 @@
+buildscript {
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/central" }
+    }
+    dependencies {
+        classpath "org.owasp:dependency-check-gradle:5.0.0-M2"
+        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.1"
+    }
+}
+
+plugins {
+    id 'java-library'
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id 'maven-publish'
+}
+
+repositories {
+    maven { url "https://maven.aliyun.com/repository/central" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:2.1.4.RELEASE"
+    }
+}
+
+group = 'com.ecommerce'
+version = 'common.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    //spring dependencies
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile("org.springframework.boot:spring-boot-starter-aop")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
+    compile("org.springframework.boot:spring-boot-starter-amqp")
+
+    //common dependencies
+    compile("mysql:mysql-connector-java:8.0.15")
+    compile('io.jsonwebtoken:jjwt:0.9.1')
+    compile("org.flywaydb:flyway-core")
+    implementation('com.google.guava:guava:27.0.1-jre')
+    compile('commons-io:commons-io:2.6')
+    compile('org.apache.commons:commons-lang3')
+    compile('org.apache.commons:commons-collections4:4.2')
+    compile('io.springfox:springfox-swagger2:2.9.2')
+    compile('io.springfox:springfox-swagger-ui:2.9.2')
+    compile('com.cwbase:logback-redis-appender:1.1.5')
+    compile('net.javacrumbs.shedlock:shedlock-spring:2.4.0')
+    compile('net.javacrumbs.shedlock:shedlock-provider-jdbc-template:2.4.0')
+
+
+    //jackson dependencies
+    compile('com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.8')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.8')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8')
+    compile('com.fasterxml.jackson.core:jackson-core:2.9.8')
+    compile('com.fasterxml.jackson.core:jackson-databind:2.9.8')
+    compile('com.fasterxml.jackson.core:jackson-annotations:2.9.8')
+
+    //test dependencies
+    testCompile("org.junit.jupiter:junit-jupiter-api")
+    testCompile('org.junit.jupiter:junit-jupiter-engine')
+    testCompile('org.mockito:mockito-junit-jupiter:2.26.0')
+}
+
+
+
+
+configurations.all {
+    exclude group: "junit", module: "junit"
+    exclude group: "org.assertj", module: "assertj-core"
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+
+wrapper {
+    gradleVersion = '5.2.1'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
+}
+
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.ecommerce'
+            artifactId = 'common'
+            version = '1.0-SNAPSHOT'
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            def releasesRepoUrl = "http://localhost:8081/repository/maven-releases/"
+            def snapshotsRepoUrl = "http://localhost:8081/repository/maven-snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            name = version.endsWith('SNAPSHOT') ? "snapshots" : "releases"
+            credentials {
+                username = 'admin'
+                password = 'admin123'
+            }
+        }
+    }
+}
+
+
+apply from: "${rootProject.projectDir}/gradle/idea.gradle"
+//apply from: "${rootProject.projectDir}/gradle/dependency-check/dependency-check.gradle"
+apply from: "${rootProject.projectDir}/gradle/spotbugs/spotbugs.gradle"
+apply from: "${rootProject.projectDir}/gradle/checkstyle/checkstyle.gradle"
+apply from: "${rootProject.projectDir}/gradle/git-hooks/git-hooks.gradle"
+apply from: "${rootProject.projectDir}/gradle/version-info.gradle"
+apply from: "${rootProject.projectDir}/gradle/jacoco.gradle"
