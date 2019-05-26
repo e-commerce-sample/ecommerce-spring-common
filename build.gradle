@@ -103,8 +103,8 @@ publishing {
 
     repositories {
         maven {
-            def releasesRepoUrl = "http://localhost:8081/repository/maven-releases/"
-            def snapshotsRepoUrl = "http://localhost:8081/repository/maven-snapshots/"
+            def releasesRepoUrl = "http://localhost:9091/repository/maven-releases/"
+            def snapshotsRepoUrl = "http://localhost:9091/repository/maven-snapshots/"
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
             name = version.endsWith('SNAPSHOT') ? "snapshots" : "releases"
             credentials {
