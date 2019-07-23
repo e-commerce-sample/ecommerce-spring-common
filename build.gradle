@@ -25,7 +25,7 @@ dependencyManagement {
 }
 
 group = 'com.ecommerce'
-version = 'common.0.1-SNAPSHOT'
+version = 'common.0.1'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -93,7 +93,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.ecommerce'
             artifactId = 'common'
-            version = '0.1-SNAPSHOT'
+            version = '0.1'
             from components.java
             artifact sourcesJar {
                 classifier "sources"
@@ -103,14 +103,7 @@ publishing {
 
     repositories {
         maven {
-            def releasesRepoUrl = "http://localhost:9091/repository/maven-releases/"
-            def snapshotsRepoUrl = "http://localhost:9091/repository/maven-snapshots/"
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-            name = version.endsWith('SNAPSHOT') ? "snapshots" : "releases"
-            credentials {
-                username = 'admin'
-                password = 'admin123'
-            }
+            url = "https://mymavenrepo.com/repo/Cd07WrKAtJ9Kq7PBaTuf/"
         }
     }
 }
