@@ -24,8 +24,12 @@ dependencyManagement {
     }
 }
 
-group = 'com.ecommerce'
-version = 'common.0.1'
+def theGroup = 'com.ecommerce'
+def theArtifactName = 'ecommerce-common'
+def theVersion = '0.3-SNAPSHOT'
+group = theGroup
+archivesBaseName = theArtifactName
+version = theVersion
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -91,9 +95,9 @@ task sourcesJar(type: Jar) {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'com.ecommerce'
-            artifactId = 'common'
-            version = '0.1'
+            groupId = theGroup
+            artifactId = theArtifactName
+            version = theVersion
             from components.java
             artifact sourcesJar {
                 classifier "sources"
