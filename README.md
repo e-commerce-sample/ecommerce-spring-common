@@ -19,3 +19,5 @@
 |`./publish.sh`|发布到mymavenrepo.com仓库，发布新版本时需要修改`build.gradle`文件中的`theVersion`变量|
 
 - 本项目使用mymavenrepo.com作为maven发布仓库:[网站地址](https://mymavenrepo.com/app/repos/F0lRvilYH123TUeMr5GN/)
+- 发布时使用的URL: https://mymavenrepo.com/repo/Cd07WrKAtJ9Kq7PBaTuf/
+- 依赖时使用的URL: https://mymavenrepo.com/repo/2w5k9sU2AsKfaYehyqno/
