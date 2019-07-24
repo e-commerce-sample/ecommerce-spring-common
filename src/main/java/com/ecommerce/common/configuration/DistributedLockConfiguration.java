@@ -1,5 +1,6 @@
-package com.ecommerce.common.distributedlock;
+package com.ecommerce.common.configuration;
 
+import com.ecommerce.common.distributedlock.DistributedLockExecutor;
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;
 import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
