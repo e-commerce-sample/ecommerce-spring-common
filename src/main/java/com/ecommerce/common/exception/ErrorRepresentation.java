@@ -12,7 +12,7 @@ class ErrorRepresentation extends RequestIdAwareRepresentation {
     private final ErrorDetail error;
 
     ErrorRepresentation(AppException ex, String path) {
-        ErrorEnum error = ex.getError();
+        ErrorCode error = ex.getError();
         this.error = new ErrorDetail(error.getCode(), error.getStatus(), error.getMessage(), path, ex.getData());
     }
 

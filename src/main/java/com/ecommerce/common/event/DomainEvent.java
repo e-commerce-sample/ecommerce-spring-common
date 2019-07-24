@@ -19,6 +19,7 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.EXISTING_PROPERTY
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 import static java.time.Instant.now;
 
+// Make sure to register the @JsonSubTypes when adding new concrete event classes
 @JsonTypeInfo(use = NAME, include = EXISTING_PROPERTY, property = "_type", visible = true)
 @JsonSubTypes({
         @Type(value = OrderCreatedEvent.class, name = "ORDER_CREATED"),

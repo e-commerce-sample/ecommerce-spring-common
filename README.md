@@ -1,3 +1,4 @@
+### 项目简介
 - 该项目为ecommerce系统所有子系统共享的java包，包含:
 
 |功能|所在目录|
@@ -10,7 +11,7 @@
 |所有子系统的领域事件|event|
 |常用工具类|utils|
 
-- 命令行用法：
+### 命令行用法：
 
 |命令|用途|
 | --- | --- |
@@ -21,3 +22,19 @@
 - 本项目使用mymavenrepo.com作为maven发布仓库:[网站地址](https://mymavenrepo.com/app/repos/F0lRvilYH123TUeMr5GN/)
 - 发布时使用的URL: https://mymavenrepo.com/repo/Cd07WrKAtJ9Kq7PBaTuf/
 - 依赖时使用的URL: https://mymavenrepo.com/repo/2w5k9sU2AsKfaYehyqno/
+
+
+### 注意事项
+- 添加新类型的event类时必须在DomainEvent基类中注册`@JsonSubTypes`，比如OrderPaidEvent：
+```java
+//...
+@JsonSubTypes({
+//...
+        @Type(value = OrderPaidEvent.class, name = "ORDER_PAID"),
+//...
+})
+public abstract class DomainEvent {
+    
+}
+//...
+```

@@ -7,6 +7,7 @@ import net.javacrumbs.shedlock.core.SimpleLock;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+// Used directly by client code to run with distributed lock
 public class DistributedLockExecutor {
     private final LockProvider lockProvider;
 
