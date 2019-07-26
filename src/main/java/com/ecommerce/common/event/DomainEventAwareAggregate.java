@@ -2,6 +2,7 @@ package com.ecommerce.common.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -19,6 +20,6 @@ public abstract class DomainEventAwareAggregate {
     }
 
     List<DomainEvent> getEvents() {
-        return events;
+        return Collections.unmodifiableList(events);
     }
 }

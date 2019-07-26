@@ -19,8 +19,6 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.EXISTING_PROPERTY
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 import static java.time.Instant.now;
 
-// TODO: 2019-07-24 调研jackson继承的简化用法，event发送和接收数据库抽对象，
-// 调查异步发送的最小频率
 // Make sure to register the @JsonSubTypes when adding new concrete event classes
 @JsonTypeInfo(use = NAME, include = EXISTING_PROPERTY, property = "_type", visible = true)
 @JsonSubTypes({

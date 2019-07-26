@@ -1,5 +1,6 @@
-package com.ecommerce.common.event;
+package com.ecommerce.common.event.publish;
 
+import com.ecommerce.common.event.DomainEvent;
 import com.ecommerce.common.utils.DefaultObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,12 +16,12 @@ import static com.google.common.collect.ImmutableMap.of;
 import static com.google.common.collect.Lists.newArrayList;
 
 @Component
-public class DomainEventDAO {
+public class DomainEventDao {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final DefaultObjectMapper objectMapper;
     private final RowMapper<DomainEvent> mapper;
 
-    public DomainEventDAO(NamedParameterJdbcTemplate jdbcTemplate, DefaultObjectMapper objectMapper) {
+    public DomainEventDao(NamedParameterJdbcTemplate jdbcTemplate, DefaultObjectMapper objectMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.objectMapper = objectMapper;
         this.mapper = mapper(objectMapper);
@@ -43,22 +44,22 @@ public class DomainEventDAO {
         insert(newArrayList(event));
     }
 
-    public List<DomainEvent> nextBatchEvents() {
+    public List<DomainEvent> toBePublishedEvents() {
         String sql = "SELECT JSON_CONTENT FROM EVENT WHERE PUBLISH_TRIES < 5 ORDER BY CREATED_AT LIMIT 50;";
         return jdbcTemplate.query(sql, mapper);
     }
 
-    public void delete(String id) {
+    public void delete(String eventId) {
         String sql = "DELETE FROM EVENT WHERE ID = :id;";
-        jdbcTemplate.update(sql, of("id", id));
+        jdbcTemplate.update(sql, of("id", eventId));
     }
 
     private RowMapper<DomainEvent> mapper(DefaultObjectMapper objectMapper) {
         return (rs, rowNum) -> objectMapper.readValue(rs.getString("JSON_CONTENT"), DomainEvent.class);
     }
 
-    public void increasePublishTries(String id) {
+    public void increasePublishTries(String eventId) {
         String sql = "UPDATE EVENT SET PUBLISH_TRIES = PUBLISH_TRIES + 1 WHERE ID = :id;";
-        jdbcTemplate.update(sql, ImmutableMap.of("id", id));
+        jdbcTemplate.update(sql, ImmutableMap.of("id", eventId));
     }
 }
