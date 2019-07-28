@@ -25,7 +25,10 @@ public class DomainEventPublishAspect {
     @After("@annotation(org.springframework.web.bind.annotation.PostMapping) || " +
             "@annotation(org.springframework.web.bind.annotation.PutMapping) || " +
             "@annotation(org.springframework.web.bind.annotation.PatchMapping) || " +
-            "@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
+            "@annotation(org.springframework.web.bind.annotation.DeleteMapping) ||" +
+            "@annotation(org.springframework.amqp.rabbit.annotation.RabbitHandler) ||" +
+            "@annotation(org.springframework.amqp.rabbit.annotation.RabbitListener) ||" +
+            "@annotation(com.ecommerce.common.event.consume.EcommerceRabbitListener)")
     public void publishEvents(JoinPoint joinPoint) {
         logger.info("Trigger domain event publish after HTTP write methods.");
         taskExecutor.execute(() -> publisher.publish());
