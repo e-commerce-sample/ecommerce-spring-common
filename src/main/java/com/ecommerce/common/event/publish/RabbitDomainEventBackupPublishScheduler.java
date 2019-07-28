@@ -15,7 +15,7 @@ public class RabbitDomainEventBackupPublishScheduler {
         this.publisher = publisher;
     }
 
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelay = 120000)
     public void run() {
         logger.info("Scheduled trigger domain event publish process.");
         publisher.publish();
