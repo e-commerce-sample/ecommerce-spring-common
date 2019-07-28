@@ -7,5 +7,9 @@ public enum DomainEventType {
     ORDER_PRODUCT_CHANGED,
     PRODUCT_CREATED,
     PRODUCT_NAME_UPDATED,
-    INVENTORY_CHANGED
+    INVENTORY_CHANGED;
+
+    public String toRoutingKey() {
+        return this.name().toLowerCase().replace('_', '.');
+    }
 }

@@ -59,7 +59,7 @@ public class RabbitDomainEventPublisher {
             try {
                 String exchange = properties.getPublishX();
                 DomainEventType eventType = event.get_type();
-                String routingKey = eventType.name().toLowerCase().replace('_', '.');
+                String routingKey = eventType.toRoutingKey();
                 eventDao.increasePublishTries(event.get_id());
                 rabbitTemplate.convertAndSend(exchange,
                         routingKey,
