@@ -13,10 +13,10 @@ public class InventoryChangedEvent extends InventoryEvent {
 
     @JsonCreator
     private InventoryChangedEvent(@JsonProperty("_id") String _id,
-                                 @JsonProperty("_type") DomainEventType _type,
-                                 @JsonProperty("_createdAt") Instant _createdAt,
-                                 @JsonProperty("productId") String productId,
-                                 @JsonProperty("remains") int remains) {
+                                  @JsonProperty("_type") DomainEventType _type,
+                                  @JsonProperty("_createdAt") Instant _createdAt,
+                                  @JsonProperty("productId") String productId,
+                                  @JsonProperty("remains") int remains) {
         super(productId, _id, _type, _createdAt);
         this.remains = remains;
     }
