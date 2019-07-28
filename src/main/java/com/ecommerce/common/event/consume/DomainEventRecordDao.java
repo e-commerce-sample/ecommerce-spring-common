@@ -16,12 +16,12 @@ public class DomainEventRecordDao {
     }
 
     public void recordEvent(DomainEvent event) {
-        String sql = "INSERT INTO EVENT_RECEIVE_RECORD (EVENT_ID) VALUES (:eventId);";
+        String sql = "INSERT INTO DOMAIN_EVENT_RECEIVE_RECORD (EVENT_ID) VALUES (:eventId);";
         jdbcTemplate.update(sql, of("eventId", event.get_id()));
     }
 
     public void clear() {
-        String sql = "DELETE FROM EVENT_RECEIVE_RECORD;";
+        String sql = "DELETE FROM DOMAIN_EVENT_RECEIVE_RECORD;";
         jdbcTemplate.update(sql, newHashMap());
     }
 }

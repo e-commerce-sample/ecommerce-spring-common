@@ -3,6 +3,7 @@ package com.ecommerce.common.event.publish;
 import com.ecommerce.common.distributedlock.DistributedLockExecutor;
 import com.ecommerce.common.event.DomainEvent;
 import com.ecommerce.common.event.DomainEventType;
+import com.ecommerce.common.event.EcommerceRabbitProperties;
 import com.ecommerce.common.logging.AutoNamingLoggerFactory;
 import net.javacrumbs.shedlock.core.LockConfiguration;
 import org.slf4j.Logger;
@@ -21,14 +22,17 @@ public class RabbitDomainEventPublisher {
     private final DomainEventDao eventDao;
     private final RabbitTemplate rabbitTemplate;
     private DistributedLockExecutor lockExecutor;
+    private EcommerceRabbitProperties properties;
 
 
     public RabbitDomainEventPublisher(DomainEventDao eventDao,
                                       ConnectionFactory connectionFactory,
                                       MessageConverter messageConverter,
-                                      DistributedLockExecutor lockExecutor) {
+                                      DistributedLockExecutor lockExecutor,
+                                      EcommerceRabbitProperties properties) {
         this.eventDao = eventDao;
         this.lockExecutor = lockExecutor;
+        this.properties = properties;
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter);
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
@@ -45,7 +49,7 @@ public class RabbitDomainEventPublisher {
 
     public void publish() {
         Instant now = Instant.now();
-        LockConfiguration configuration = new LockConfiguration("domain-event-publisher", now.plusSeconds(30), now.plusSeconds(1));
+        LockConfiguration configuration = new LockConfiguration("domain-event-publisher", now.plusSeconds(10), now.plusSeconds(1));
         lockExecutor.execute(this::doPublish, configuration);
     }
 
@@ -53,8 +57,8 @@ public class RabbitDomainEventPublisher {
         List<DomainEvent> newestEvents = eventDao.toBePublishedEvents();
         newestEvents.forEach(event -> {
             try {
+                String exchange = properties.getPublishX();
                 DomainEventType eventType = event.get_type();
-                String exchange = eventType.name().toLowerCase().split("_")[0];
                 String routingKey = eventType.name().toLowerCase().replace('_', '.');
                 eventDao.increasePublishTries(event.get_id());
                 rabbitTemplate.convertAndSend(exchange,

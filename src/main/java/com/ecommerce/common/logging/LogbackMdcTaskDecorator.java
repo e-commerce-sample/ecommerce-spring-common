@@ -14,7 +14,9 @@ public class LogbackMdcTaskDecorator implements TaskDecorator {
         Map<String, String> contextMap = MDC.getCopyOfContextMap();
         return () -> {
             try {
-                MDC.setContextMap(contextMap);
+                if (contextMap != null) {
+                    MDC.setContextMap(contextMap);
+                }
                 runnable.run();
             } finally {
                 MDC.clear();

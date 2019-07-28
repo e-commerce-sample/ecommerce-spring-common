@@ -28,7 +28,7 @@ public class DomainEventDao {
     }
 
     public void insert(List<DomainEvent> events) {
-        String sql = "INSERT INTO EVENT (ID, JSON_CONTENT) VALUES (:id, :json);";
+        String sql = "INSERT INTO DOMAIN_EVENT (ID, JSON_CONTENT) VALUES (:id, :json);";
 
         SqlParameterSource[] parameters = events.stream()
                 .map((Function<DomainEvent, SqlParameterSource>) domainEvent ->
@@ -45,12 +45,12 @@ public class DomainEventDao {
     }
 
     public List<DomainEvent> toBePublishedEvents() {
-        String sql = "SELECT JSON_CONTENT FROM EVENT WHERE PUBLISH_TRIES < 5 ORDER BY CREATED_AT LIMIT 50;";
+        String sql = "SELECT JSON_CONTENT FROM DOMAIN_EVENT WHERE PUBLISH_TRIES < 5 ORDER BY CREATED_AT LIMIT 50;";
         return jdbcTemplate.query(sql, mapper);
     }
 
     public void delete(String eventId) {
-        String sql = "DELETE FROM EVENT WHERE ID = :id;";
+        String sql = "DELETE FROM DOMAIN_EVENT WHERE ID = :id;";
         jdbcTemplate.update(sql, of("id", eventId));
     }
 
@@ -59,7 +59,7 @@ public class DomainEventDao {
     }
 
     public void increasePublishTries(String eventId) {
-        String sql = "UPDATE EVENT SET PUBLISH_TRIES = PUBLISH_TRIES + 1 WHERE ID = :id;";
+        String sql = "UPDATE DOMAIN_EVENT SET PUBLISH_TRIES = PUBLISH_TRIES + 1 WHERE ID = :id;";
         jdbcTemplate.update(sql, ImmutableMap.of("id", eventId));
     }
 }
