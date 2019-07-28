@@ -6,6 +6,7 @@ import com.ecommerce.common.event.order.OrderCreatedEvent;
 import com.ecommerce.common.event.order.OrderPaidEvent;
 import com.ecommerce.common.event.order.OrderProductChangedEvent;
 import com.ecommerce.common.event.product.ProductCreatedEvent;
+import com.ecommerce.common.event.product.ProductNameUpdatedEvent;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -27,6 +28,7 @@ import static java.time.Instant.now;
         @Type(value = OrderPaidEvent.class, name = "ORDER_PAID"),
         @Type(value = OrderProductChangedEvent.class, name = "ORDER_PRODUCT_CHANGED"),
         @Type(value = ProductCreatedEvent.class, name = "PRODUCT_CREATED"),
+        @Type(value = ProductNameUpdatedEvent.class, name = "PRODUCT_NAME_UPDATED"),
         @Type(value = InventoryChangedEvent.class, name = "INVENTORY_CHANGED")
 
 })
