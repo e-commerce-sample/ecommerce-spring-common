@@ -20,12 +20,6 @@ public class DistributedLockExecutor {
         this.lockProvider = lockProvider;
     }
 
-    public <T> T tryExecute(Supplier<T> supplier, String lockKey) {
-        LockConfiguration lockConfiguration = new LockConfiguration(lockKey, Instant.now().plus(MAX_RUN_TIME));
-        return this.tryExecute(supplier, lockConfiguration);
-
-    }
-
     public <T> T tryExecute(Supplier<T> supplier, LockConfiguration configuration) {
         Optional<SimpleLock> lock = lockProvider.lock(configuration);
         if (!lock.isPresent()) {
@@ -37,6 +31,12 @@ public class DistributedLockExecutor {
         } finally {
             lock.get().unlock();
         }
+    }
+
+    public <T> T tryExecute(Supplier<T> supplier, String lockKey) {
+        LockConfiguration lockConfiguration = new LockConfiguration(lockKey, Instant.now().plus(MAX_RUN_TIME));
+        return this.tryExecute(supplier, lockConfiguration);
+
     }
 
     public <T> T execute(Supplier<T> supplier, LockConfiguration configuration) {

@@ -21,7 +21,7 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.interceptor.RetryOperationsInterceptor;
 
-// You must define by yourself the Exchange(s) that your receiveQ will be bound to, and also the relevant binding configurations
+// For every services, you must bind your own receive-q to the exchanges that you want to receive message from
 @Configuration
 public class CommonRabbitmqConfig {
 
