@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 public class RabbitDomainEventBackupPublishScheduler {
     private static final Logger logger = AutoNamingLoggerFactory.getLogger();
 
-    private RabbitDomainEventPublisher publisher;
+    private DomainEventPublisher publisher;
 
-    public RabbitDomainEventBackupPublishScheduler(RabbitDomainEventPublisher publisher) {
+    public RabbitDomainEventBackupPublishScheduler(DomainEventPublisher publisher) {
         this.publisher = publisher;
     }
 

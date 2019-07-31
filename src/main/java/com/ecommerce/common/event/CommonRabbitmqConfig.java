@@ -11,6 +11,7 @@ import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFacto
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.retry.RejectAndDontRequeueRecoverer;
+import org.springframework.amqp.rabbit.transaction.RabbitTransactionManager;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -35,6 +36,11 @@ public class CommonRabbitmqConfig {
     }
 
     @Bean
+    public RabbitTransactionManager rabbitTransactionManager(ConnectionFactory connectionFactory) {
+        return new RabbitTransactionManager(connectionFactory);
+    }
+
+    @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory factory = new CachingConnectionFactory();
         factory.setAddresses(rabbitProperties.getAddresses());
@@ -42,7 +48,6 @@ public class CommonRabbitmqConfig {
         factory.setPassword(rabbitProperties.getPassword());
         factory.setPort(rabbitProperties.getPort());
         factory.setVirtualHost(rabbitProperties.getVirtualHost());
-        factory.setPublisherConfirms(true);
         return factory;
     }
 

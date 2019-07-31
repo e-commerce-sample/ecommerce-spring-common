@@ -14,10 +14,10 @@ public class DomainEventPublishAspect {
     private static final Logger logger = AutoNamingLoggerFactory.getLogger();
 
     private TaskExecutor taskExecutor;
-    private RabbitDomainEventPublisher publisher;
+    private DomainEventPublisher publisher;
 
     public DomainEventPublishAspect(TaskExecutor taskExecutor,
-                                    RabbitDomainEventPublisher publisher) {
+                                    DomainEventPublisher publisher) {
         this.taskExecutor = taskExecutor;
         this.publisher = publisher;
     }

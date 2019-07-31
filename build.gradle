@@ -26,7 +26,7 @@ dependencyManagement {
 
 def theGroup = 'com.ecommerce'
 def theArtifactName = 'ecommerce-common'
-def theVersion = '0.16-SNAPSHOT'
+def theVersion = '0.19-SNAPSHOT'
 group = theGroup
 archivesBaseName = theArtifactName
 version = theVersion
