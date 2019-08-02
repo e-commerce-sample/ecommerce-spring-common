@@ -39,6 +39,7 @@ public class DomainEventPublisher {
             try {
                 eventDao.increasePublishTries(event.get_id());
                 eventSender.send(event);
+                logger.debug("Published {}.", event);
                 eventDao.delete(event.get_id());
             } catch (Throwable t) {
                 logger.error("Error while publish domain event {}:{}", event, t.getMessage());

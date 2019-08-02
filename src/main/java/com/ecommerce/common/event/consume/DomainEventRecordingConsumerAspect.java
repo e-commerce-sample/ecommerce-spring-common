@@ -14,7 +14,8 @@ public class DomainEventRecordingConsumerAspect {
         this.domainEventRecordingConsumer = domainEventRecordingConsumer;
     }
 
-    @Around("@annotation(org.springframework.amqp.rabbit.annotation.RabbitHandler) || @annotation(org.springframework.amqp.rabbit.annotation.RabbitListener)")
+    @Around("@annotation(org.springframework.amqp.rabbit.annotation.RabbitHandler) ||" +
+            " @annotation(org.springframework.amqp.rabbit.annotation.RabbitListener)")
     public Object recordEvents(ProceedingJoinPoint joinPoint) throws Throwable {
         return domainEventRecordingConsumer.recordAndConsume(joinPoint);
     }
