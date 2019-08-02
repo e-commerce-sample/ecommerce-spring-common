@@ -1,5 +1,5 @@
 ### 项目简介
-- 该项目为ecommerce系统所有子系统共享的java包，包含:
+- 该项目为Ecommerce系统所有子系统共享的java包，包含:
 
 |功能|所在目录|
 | --- | --- |
@@ -10,6 +10,18 @@
 |RabbitMQ基础配置|event|
 |所有子系统的领域事件|event|
 |常用工具类|utils|
+
+
+Ecommerce项目包括：
+
+|代码库|用途|地址|
+| --- | --- | --- |
+|order-backend|Order服务|[https://github.com/e-commerce-sample/order-backend](https://github.com/e-commerce-sample/order-backend)|
+|product-backend|Product服务|[https://github.com/e-commerce-sample/product-backend](https://github.com/e-commerce-sample/product-backend)|
+|inventory-backend|Inventory服务|[https://github.com/e-commerce-sample/inventory-backend](https://github.com/e-commerce-sample/inventory-backend)|
+|common|共享依赖包|[https://github.com/e-commerce-sample/common](https://github.com/e-commerce-sample/common)|
+|devops|基础设施|[https://github.com/e-commerce-sample/devops](https://github.com/e-commerce-sample/devops)|
+
 
 ### 命令行用法：
 

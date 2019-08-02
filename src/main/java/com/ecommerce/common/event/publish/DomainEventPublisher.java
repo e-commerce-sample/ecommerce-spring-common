@@ -29,7 +29,7 @@ public class DomainEventPublisher {
 
     public void publish() {
         Instant now = Instant.now();
-        LockConfiguration configuration = new LockConfiguration("domain-event-publisher", now.plusSeconds(30));
+        LockConfiguration configuration = new LockConfiguration("domain-event-publisher", now.plusSeconds(60));
         lockExecutor.execute(this::doPublish, configuration);
     }
 
