@@ -66,12 +66,12 @@ public class CommonRabbitmqConfig {
 
         FixedBackOffPolicy fixedBackOffPolicy = new FixedBackOffPolicy();
         fixedBackOffPolicy.setBackOffPeriod(1000L);
-        RetryOperationsInterceptor build = RetryInterceptorBuilder.stateless()
+        RetryOperationsInterceptor retryOperationsInterceptor = RetryInterceptorBuilder.stateless()
                 .maxAttempts(3)
                 .backOffPolicy(fixedBackOffPolicy)
                 .recoverer(new RejectAndDontRequeueRecoverer())
                 .build();
-        factory.setAdviceChain(build);
+        factory.setAdviceChain(retryOperationsInterceptor);
 
         factory.setTaskExecutor(taskExecutor);
         return factory;
