@@ -43,6 +43,7 @@ public class CommonRabbitmqConfig {
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory factory = new CachingConnectionFactory();
+        factory.setHost(rabbitProperties.getHost());
         factory.setAddresses(rabbitProperties.getAddresses());
         factory.setUsername(rabbitProperties.getUsername());
         factory.setPassword(rabbitProperties.getPassword());
