@@ -19,7 +19,7 @@ repositories {
 
 def theGroup = 'com.ecommerce'
 def theArtifactName = 'ecommerce-common'
-def theVersion = '0.30-SNAPSHOT'
+def theVersion = '0.33-SNAPSHOT'
 group = theGroup
 archivesBaseName = theArtifactName
 version = theVersion
