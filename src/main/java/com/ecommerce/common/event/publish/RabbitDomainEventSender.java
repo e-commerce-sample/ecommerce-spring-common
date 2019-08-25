@@ -3,7 +3,6 @@ package com.ecommerce.common.event.publish;
 import com.ecommerce.common.event.DomainEvent;
 import com.ecommerce.common.event.DomainEventType;
 import com.ecommerce.common.event.EcommerceRabbitProperties;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.stereotype.Component;
@@ -15,11 +14,10 @@ public class RabbitDomainEventSender {
     private final EcommerceRabbitProperties properties;
 
 
-    public RabbitDomainEventSender(ConnectionFactory connectionFactory,
-                                   MessageConverter messageConverter,
-                                   EcommerceRabbitProperties properties) {
+    public RabbitDomainEventSender(MessageConverter messageConverter,
+                                   EcommerceRabbitProperties properties,
+                                   RabbitTemplate rabbitTemplate) {
         this.properties = properties;
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter);
         rabbitTemplate.setChannelTransacted(true);
         this.rabbitTemplate = rabbitTemplate;

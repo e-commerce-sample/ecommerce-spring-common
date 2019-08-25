@@ -10,7 +10,6 @@ buildscript {
 
 plugins {
     id 'java-library'
-    id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id 'maven-publish'
 }
 
@@ -18,15 +17,9 @@ repositories {
     maven { url "https://maven.aliyun.com/repository/central" }
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-starter-parent:2.1.4.RELEASE"
-    }
-}
-
 def theGroup = 'com.ecommerce'
 def theArtifactName = 'ecommerce-common'
-def theVersion = '0.22-SNAPSHOT'
+def theVersion = '0.30-SNAPSHOT'
 group = theGroup
 archivesBaseName = theArtifactName
 version = theVersion
@@ -35,6 +28,13 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    compile platform('org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE')
+    compile platform("org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE")
+    compile platform("org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE")
+
+    compile "org.springframework.cloud:spring-cloud-starter-sleuth"
+    compile "org.springframework.cloud:spring-cloud-starter-zipkin"
+
     //spring dependencies
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-actuator')
