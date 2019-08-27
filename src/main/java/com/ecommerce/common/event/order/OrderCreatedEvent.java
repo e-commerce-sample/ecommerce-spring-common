@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderCreatedEvent extends OrderEvent {
     private BigDecimal price;
     private Address address;

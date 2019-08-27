@@ -3,7 +3,7 @@ package com.ecommerce.common.event.order;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderAddressChangedEvent extends OrderEvent {
     private String oldAddress;
     private String newAddress;

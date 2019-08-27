@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductCreatedEvent extends ProductEvent {
     private String name;
     private String description;

@@ -3,7 +3,7 @@ package com.ecommerce.common.event.inventory;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class InventoryChangedEvent extends InventoryEvent {
     private int remains;
 

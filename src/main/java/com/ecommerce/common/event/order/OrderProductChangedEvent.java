@@ -3,7 +3,7 @@ package com.ecommerce.common.event.order;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderProductChangedEvent extends OrderEvent {
     private String productId;
     private int originCount;

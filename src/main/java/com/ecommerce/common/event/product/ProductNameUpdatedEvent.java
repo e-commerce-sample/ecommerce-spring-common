@@ -3,7 +3,7 @@ package com.ecommerce.common.event.product;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductNameUpdatedEvent extends ProductEvent {
     private String oldName;
     private String newName;

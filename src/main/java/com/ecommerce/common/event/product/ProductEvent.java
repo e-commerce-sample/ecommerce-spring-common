@@ -4,7 +4,7 @@ import com.ecommerce.common.event.DomainEvent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class ProductEvent extends DomainEvent {
     private String productId;
 
