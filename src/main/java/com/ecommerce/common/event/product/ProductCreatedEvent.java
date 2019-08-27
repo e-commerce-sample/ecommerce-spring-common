@@ -1,39 +1,21 @@
 package com.ecommerce.common.event.product;
 
-import com.ecommerce.common.event.DomainEventType;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
-import static com.ecommerce.common.event.DomainEventType.PRODUCT_CREATED;
 
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProductCreatedEvent extends ProductEvent {
-    private final String name;
-    private final String description;
-    private final BigDecimal price;
-    private final Instant createdAt;
-
-    @JsonCreator
-    private ProductCreatedEvent(@JsonProperty("_id") String _id,
-                                @JsonProperty("_type") DomainEventType _type,
-                                @JsonProperty("_createdAt") Instant _createdAt,
-                                @JsonProperty("productId") String productId,
-                                @JsonProperty("name") String name,
-                                @JsonProperty("description") String description,
-                                @JsonProperty("price") BigDecimal price,
-                                @JsonProperty("createdAt") Instant createdAt) {
-        super(productId, _id, _type, _createdAt);
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.createdAt = createdAt;
-    }
+    private String name;
+    private String description;
+    private BigDecimal price;
+    private Instant createdAt;
 
     public ProductCreatedEvent(String productId, String name, String description, BigDecimal price, Instant createdAt) {
-        super(productId, PRODUCT_CREATED);
+        super(productId);
         this.name = name;
         this.description = description;
         this.price = price;

@@ -1,5 +1,7 @@
 package com.ecommerce.common.configuration;
 
+import com.ecommerce.common.event.DomainEvent;
+import com.ecommerce.common.event.publish.DomainEventDeserializer;
 import com.ecommerce.common.utils.DefaultObjectMapper;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -40,7 +42,14 @@ public class ObjectMapperConfiguration {
                 .registerModule(trimStringModule())
                 .configure(WRITE_DATES_AS_TIMESTAMPS, false)
                 .configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.registerModule(domainEventModule());
         return mapper;
+    }
+
+    private SimpleModule domainEventModule() {
+        return new SimpleModule()
+                .addDeserializer(DomainEvent.class,
+                        new DomainEventDeserializer(DomainEvent.class));
     }
 
     private SimpleModule instantModule() {

@@ -1,7 +1,6 @@
 package com.ecommerce.common.event.publish;
 
 import com.ecommerce.common.event.DomainEvent;
-import com.ecommerce.common.event.DomainEventType;
 import com.ecommerce.common.event.EcommerceRabbitProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -26,8 +25,7 @@ public class RabbitDomainEventSender {
     @Transactional(transactionManager = "rabbitTransactionManager")
     public void send(DomainEvent event) {
         String exchange = properties.getPublishX();
-        DomainEventType eventType = event.get_type();
-        String routingKey = eventType.toRoutingKey();
+        String routingKey = event.get_type();
         rabbitTemplate.convertAndSend(exchange, routingKey, event);
     }
 

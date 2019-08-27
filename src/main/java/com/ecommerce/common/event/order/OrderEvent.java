@@ -1,26 +1,14 @@
 package com.ecommerce.common.event.order;
 
 import com.ecommerce.common.event.DomainEvent;
-import com.ecommerce.common.event.DomainEventType;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class OrderEvent extends DomainEvent {
-    private final String orderId;
+    private String orderId;
 
-    @JsonCreator
-    protected OrderEvent(@JsonProperty("orderId") String orderId,
-                         @JsonProperty("_id") String _id,
-                         @JsonProperty("_type") DomainEventType _type,
-                         @JsonProperty("_createdAt") Instant _createdAt) {
-        super(_id, _type, _createdAt);
-        this.orderId = orderId;
-    }
-
-    protected OrderEvent(String orderId, DomainEventType eventType) {
-        super(eventType);
+    protected OrderEvent(String orderId) {
         this.orderId = orderId;
     }
 
