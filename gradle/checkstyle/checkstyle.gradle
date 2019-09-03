@@ -10,7 +10,7 @@ checkstyle {
 
 //配置需要忽略的文件
 tasks.withType(Checkstyle) {
-    exclude 'com/ecommerce/common/event/consume/DomainEventRecordingConsumerAspect.java'
+    exclude 'com/ecommerce/spring/common/event/consume/DomainEventRecordingConsumerAspect.java'
 }
 
 

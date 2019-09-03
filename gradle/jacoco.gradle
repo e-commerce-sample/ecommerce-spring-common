@@ -6,7 +6,7 @@ ext {
 
     // 配置需要忽略的文件
     jacocoExcludes = [
-            'com/ecommerce/common/spike/**',]
+            'com/ecommerce/spring/common/spike/**',]
 }
 
 //Unit test===========================

@@ -1,14 +1,12 @@
 ### 项目简介
-- 该项目为Ecommerce系统所有子系统共享的java包，包含:
+- 该项目为Ecommerce系统所有服务共享的Spring基础配置，包含:
 
 |功能|所在目录|
 | --- | --- |
 |Spring Boot项目基础配置|configuration|
 |通用异常处理|exception|
-|通用日志处理|logging|
 |分布式锁|distributedlock|
 |RabbitMQ基础配置|event|
-|所有子系统的领域事件|event|
 |常用工具类|utils|
 
 

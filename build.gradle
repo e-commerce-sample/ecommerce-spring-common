@@ -3,14 +3,15 @@ buildscript {
         maven { url "https://maven.aliyun.com/repository/central" }
     }
     dependencies {
-        classpath "org.owasp:dependency-check-gradle:5.0.0-M2"
-        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.1"
+        classpath "org.owasp:dependency-check-gradle:5.2.1"
+        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:2.0.0"
     }
 }
 
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'idea'
 }
 
 repositories {
@@ -19,13 +20,6 @@ repositories {
 
 }
 
-def theGroup = 'com.ecommerce'
-def theArtifactName = 'ecommerce-common'
-def theVersion = '0.36-SNAPSHOT'
-group = theGroup
-archivesBaseName = theArtifactName
-version = theVersion
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -33,7 +27,7 @@ dependencies {
     compile platform('org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE')
     compile platform("org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE")
     compile platform("org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE")
-    implementation("com.ecommerce:ecommerce-sdk-base:0.1-SNAPSHOT")
+    implementation("com.ecommerce:ecommerce-shared-model:0.6-SNAPSHOT")
 
 
     compile "org.springframework.cloud:spring-cloud-starter-sleuth"
@@ -57,17 +51,17 @@ dependencies {
     compile('io.springfox:springfox-swagger2:2.9.2')
     compile('io.springfox:springfox-swagger-ui:2.9.2')
     compile('com.cwbase:logback-redis-appender:1.1.5')
-    compile('net.javacrumbs.shedlock:shedlock-spring:2.4.0')
-    compile('net.javacrumbs.shedlock:shedlock-provider-jdbc-template:2.4.0')
+    compile('net.javacrumbs.shedlock:shedlock-spring:2.5.0')
+    compile('net.javacrumbs.shedlock:shedlock-provider-jdbc-template:2.5.0')
 
 
     //jackson dependencies
-    compile('com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.8')
-    compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.8')
-    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8')
-    compile('com.fasterxml.jackson.core:jackson-core:2.9.8')
-    compile('com.fasterxml.jackson.core:jackson-databind:2.9.8')
-    compile('com.fasterxml.jackson.core:jackson-annotations:2.9.8')
+    compile('com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.9')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.9')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.9')
+    compile('com.fasterxml.jackson.core:jackson-core:2.9.9')
+    compile('com.fasterxml.jackson.core:jackson-databind:2.9.9')
+    compile('com.fasterxml.jackson.core:jackson-annotations:2.9.9')
 
 
     compileOnly 'org.projectlombok:lombok:1.18.8'
@@ -92,7 +86,7 @@ tasks.withType(Test) {
 
 
 wrapper {
-    gradleVersion = '5.2.1'
+    gradleVersion = '5.6'
 }
 
 task sourcesJar(type: Jar) {
@@ -104,9 +98,9 @@ task sourcesJar(type: Jar) {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = theGroup
-            artifactId = theArtifactName
-            version = theVersion
+            groupId = 'com.ecommerce'
+            artifactId = 'ecommerce-spring-common'
+            version = '0.39-SNAPSHOT'
             from components.java
             artifact sourcesJar {
                 classifier "sources"
@@ -122,7 +116,6 @@ publishing {
 }
 
 
-apply from: "${rootProject.projectDir}/gradle/idea.gradle"
 apply from: "${rootProject.projectDir}/gradle/spotbugs/spotbugs.gradle"
 apply from: "${rootProject.projectDir}/gradle/checkstyle/checkstyle.gradle"
 apply from: "${rootProject.projectDir}/gradle/git-hooks/git-hooks.gradle"

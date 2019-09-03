@@ -3,11 +3,11 @@
     <!--如何设置请参考：https://spotbugs.readthedocs.io/en/stable/filter.html-->
 
     <Match>
-        <Package name="com.ecommerce.common.spike"/>
+        <Package name="com.ecommerce.spring.common.spike"/>
     </Match>
 
     <Match>
-        <Package name="~com\.ecommerce\.common\.spike.*"/>
+        <Package name="~com\.ecommerce\.spring\.common\.spike.*"/>
     </Match>
 
     <Match>
