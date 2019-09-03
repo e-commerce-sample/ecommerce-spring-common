@@ -1,6 +1,11 @@
-package com.ecommerce.spring.common.configuration;
+package com.ecommerce.spring.common.configuration.rabbit;
 
-import com.ecommerce.spring.common.event.EcommerceRabbitProperties;
+import com.ecommerce.shared.event.consume.DomainEventConsumingWrapper;
+import com.ecommerce.shared.event.publish.DomainEventPublisher;
+import com.ecommerce.shared.event.publish.DomainEventSender;
+import com.ecommerce.spring.common.event.consume.RabbitDomainEventRecordingConsumerAspect;
+import com.ecommerce.spring.common.event.publish.RabbitDomainEventPublishAspect;
+import com.ecommerce.spring.common.event.publish.RabbitDomainEventSender;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.amqp.core.Binding;
@@ -11,12 +16,14 @@ import org.springframework.amqp.rabbit.config.RetryInterceptorBuilder;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.retry.RejectAndDontRequeueRecoverer;
 import org.springframework.amqp.rabbit.transaction.RabbitTransactionManager;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
@@ -25,20 +32,16 @@ import org.springframework.retry.interceptor.RetryOperationsInterceptor;
 
 // For every services, you must bind your own receive-q to the exchanges that you want to receive message from
 @Configuration
-public class RabbitmqConfiguration {
-
+//@ConditionalOnClass({RabbitTemplate.class, Channel.class})
+@EnableConfigurationProperties(EcommerceRabbitProperties.class)
+public class RabbitConfiguration {
     private EcommerceRabbitProperties properties;
     private RabbitProperties rabbitProperties;
 
-    public RabbitmqConfiguration(EcommerceRabbitProperties properties,
-                                 RabbitProperties rabbitProperties) {
+    public RabbitConfiguration(EcommerceRabbitProperties properties,
+                               RabbitProperties rabbitProperties) {
         this.properties = properties;
         this.rabbitProperties = rabbitProperties;
-    }
-
-    @Bean
-    public RabbitTransactionManager rabbitTransactionManager(ConnectionFactory connectionFactory) {
-        return new RabbitTransactionManager(connectionFactory);
     }
 
     @Bean
@@ -53,6 +56,25 @@ public class RabbitmqConfiguration {
         return factory;
     }
 
+    @Bean
+    public RabbitTransactionManager rabbitTransactionManager(ConnectionFactory connectionFactory) {
+        return new RabbitTransactionManager(connectionFactory);
+    }
+
+
+    @Bean
+    public MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
+        Jackson2JsonMessageConverter messageConverter = new Jackson2JsonMessageConverter(objectMapper);
+        messageConverter.setClassMapper(classMapper());
+        return messageConverter;
+    }
+
+    @Bean
+    public DefaultClassMapper classMapper() {
+        DefaultClassMapper classMapper = new DefaultClassMapper();
+        classMapper.setTrustedPackages("*");
+        return classMapper;
+    }
 
     @Bean
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory,
@@ -77,21 +99,6 @@ public class RabbitmqConfiguration {
 
         factory.setTaskExecutor(taskExecutor);
         return factory;
-    }
-
-
-    @Bean
-    public MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
-        Jackson2JsonMessageConverter messageConverter = new Jackson2JsonMessageConverter(objectMapper);
-        messageConverter.setClassMapper(classMapper());
-        return messageConverter;
-    }
-
-    @Bean
-    public DefaultClassMapper classMapper() {
-        DefaultClassMapper classMapper = new DefaultClassMapper();
-        classMapper.setTrustedPackages("*");
-        return classMapper;
     }
 
 
@@ -165,6 +172,25 @@ public class RabbitmqConfiguration {
     @Bean
     public Binding receiveRecoverBinding() {
         return BindingBuilder.bind(receiveQ()).to(receiveRecoverExchange()).with("#");
+    }
+
+
+    @Bean
+    public DomainEventSender domainEventSender(MessageConverter messageConverter,
+                                               EcommerceRabbitProperties properties,
+                                               RabbitTemplate rabbitTemplate) {
+        return new RabbitDomainEventSender(messageConverter, properties, rabbitTemplate);
+    }
+
+    @Bean
+    public RabbitDomainEventRecordingConsumerAspect rabbitDomainEventRecordingConsumerAspect(DomainEventConsumingWrapper eventConsumingWrapper) {
+        return new RabbitDomainEventRecordingConsumerAspect(eventConsumingWrapper);
+    }
+
+    @Bean
+    public RabbitDomainEventPublishAspect rabbitDomainEventPublishAspect(TaskExecutor taskExecutor,
+                                                                         DomainEventPublisher publisher) {
+        return new RabbitDomainEventPublishAspect(taskExecutor, publisher);
     }
 
 }

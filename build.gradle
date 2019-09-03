@@ -24,10 +24,11 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    implementation("com.ecommerce:ecommerce-shared-model:0.9-SNAPSHOT")
+
     compile platform('org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE')
     compile platform("org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE")
     compile platform("org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE")
-    implementation("com.ecommerce:ecommerce-shared-model:0.6-SNAPSHOT")
 
 
     compile "org.springframework.cloud:spring-cloud-starter-sleuth"
@@ -100,7 +101,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.ecommerce'
             artifactId = 'ecommerce-spring-common'
-            version = '0.39-SNAPSHOT'
+            version = '0.40-SNAPSHOT'
             from components.java
             artifact sourcesJar {
                 classifier "sources"

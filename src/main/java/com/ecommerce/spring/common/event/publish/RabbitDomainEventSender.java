@@ -1,14 +1,13 @@
 package com.ecommerce.spring.common.event.publish;
 
 import com.ecommerce.shared.event.DomainEvent;
-import com.ecommerce.spring.common.event.EcommerceRabbitProperties;
+import com.ecommerce.shared.event.publish.DomainEventSender;
+import com.ecommerce.spring.common.configuration.rabbit.EcommerceRabbitProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
-public class RabbitDomainEventSender {
+public class RabbitDomainEventSender implements DomainEventSender {
     private final RabbitTemplate rabbitTemplate;
     private final EcommerceRabbitProperties properties;
 

@@ -1,14 +1,13 @@
 package com.ecommerce.spring.common.event.publish;
 
 import com.ecommerce.shared.event.DomainEvent;
-import com.ecommerce.shared.event.DomainEventPublishingRecorder;
+import com.ecommerce.shared.event.publish.DomainEventPublishingRecorder;
 import com.ecommerce.shared.utils.DefaultObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Function;
@@ -16,7 +15,6 @@ import java.util.function.Function;
 import static com.google.common.collect.ImmutableMap.of;
 import static com.google.common.collect.Lists.newArrayList;
 
-@Component
 public class JdbcTemplateDomainEventPublishingRecorder implements DomainEventPublishingRecorder {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final DefaultObjectMapper objectMapper;

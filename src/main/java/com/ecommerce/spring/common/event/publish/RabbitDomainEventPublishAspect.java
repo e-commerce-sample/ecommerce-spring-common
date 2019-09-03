@@ -1,23 +1,21 @@
 package com.ecommerce.spring.common.event.publish;
 
-import com.ecommerce.shared.event.DomainEventPublisher;
+import com.ecommerce.shared.event.publish.DomainEventPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.stereotype.Component;
 
 @Slf4j
 @Aspect
-@Component
-public class DomainEventPublishAspect {
+public class RabbitDomainEventPublishAspect {
 
     private TaskExecutor taskExecutor;
     private DomainEventPublisher publisher;
 
-    public DomainEventPublishAspect(TaskExecutor taskExecutor,
-                                    DomainEventPublisher publisher) {
+    public RabbitDomainEventPublishAspect(TaskExecutor taskExecutor,
+                                          DomainEventPublisher publisher) {
         this.taskExecutor = taskExecutor;
         this.publisher = publisher;
     }
