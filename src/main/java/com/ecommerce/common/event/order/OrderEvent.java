@@ -1,6 +1,6 @@
 package com.ecommerce.common.event.order;
 
-import com.ecommerce.common.event.DomainEvent;
+import com.ecommerce.sdk.base.DomainEvent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

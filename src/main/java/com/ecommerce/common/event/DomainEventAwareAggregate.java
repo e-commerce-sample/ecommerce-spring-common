@@ -1,5 +1,6 @@
 package com.ecommerce.common.event;
 
+import com.ecommerce.sdk.base.DomainEvent;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Collections;

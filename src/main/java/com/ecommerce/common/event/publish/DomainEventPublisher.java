@@ -1,8 +1,8 @@
 package com.ecommerce.common.event.publish;
 
 import com.ecommerce.common.distributedlock.DistributedLockExecutor;
-import com.ecommerce.common.event.DomainEvent;
 import com.ecommerce.common.logging.AutoNamingLoggerFactory;
+import com.ecommerce.sdk.base.DomainEvent;
 import net.javacrumbs.shedlock.core.LockConfiguration;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;

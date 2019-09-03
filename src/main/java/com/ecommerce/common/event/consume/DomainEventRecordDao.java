@@ -1,6 +1,6 @@
 package com.ecommerce.common.event.consume;
 
-import com.ecommerce.common.event.DomainEvent;
+import com.ecommerce.sdk.base.DomainEvent;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 

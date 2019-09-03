@@ -15,11 +15,13 @@ plugins {
 
 repositories {
     maven { url "https://maven.aliyun.com/repository/central" }
+    maven { url "https://mymavenrepo.com/repo/2w5k9sU2AsKfaYehyqno/" }
+
 }
 
 def theGroup = 'com.ecommerce'
 def theArtifactName = 'ecommerce-common'
-def theVersion = '0.35-SNAPSHOT'
+def theVersion = '0.36-SNAPSHOT'
 group = theGroup
 archivesBaseName = theArtifactName
 version = theVersion
@@ -31,6 +33,8 @@ dependencies {
     compile platform('org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE')
     compile platform("org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE")
     compile platform("org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE")
+    implementation("com.ecommerce:ecommerce-sdk-base:0.1-SNAPSHOT")
+
 
     compile "org.springframework.cloud:spring-cloud-starter-sleuth"
     compile "org.springframework.cloud:spring-cloud-starter-zipkin"

@@ -1,7 +1,7 @@
 package com.ecommerce.common.event.publish;
 
-import com.ecommerce.common.event.DomainEvent;
 import com.ecommerce.common.utils.DefaultObjectMapper;
+import com.ecommerce.sdk.base.DomainEvent;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;

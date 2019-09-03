@@ -1,6 +1,6 @@
 package com.ecommerce.common.event.publish;
 
-import com.ecommerce.common.event.DomainEvent;
+import com.ecommerce.sdk.base.DomainEvent;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -13,6 +13,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class DomainEventDeserializer extends StdDeserializer<DomainEvent> {
+
+    private static final String TYPE = "_type";
+
     public DomainEventDeserializer(Class<?> vc) {
         super(vc);
     }
@@ -25,7 +28,7 @@ public class DomainEventDeserializer extends StdDeserializer<DomainEvent> {
         while (elementsIterator.hasNext()) {
             Map.Entry<String, JsonNode> element = elementsIterator.next();
             String name = element.getKey();
-            if (name.equals("_type")) {
+            if (name.equals(TYPE)) {
                 try {
                     JsonNode value = element.getValue();
                     String className = value.asText();

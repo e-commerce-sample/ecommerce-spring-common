@@ -1,7 +1,7 @@
 package com.ecommerce.common.event.consume;
 
-import com.ecommerce.common.event.DomainEvent;
 import com.ecommerce.common.logging.AutoNamingLoggerFactory;
+import com.ecommerce.sdk.base.DomainEvent;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.springframework.dao.DuplicateKeyException;
