@@ -30,7 +30,7 @@ public class JdbcTemplateDomainEventPublishingRecorder implements DomainEventPub
 
     @Override
     public void record(DomainEvent event) {
-        record((newArrayList(event)));
+        record(newArrayList(event));
     }
 
     @Override
