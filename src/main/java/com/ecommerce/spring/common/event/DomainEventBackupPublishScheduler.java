@@ -1,6 +1,6 @@
-package com.ecommerce.spring.common.event.publish;
+package com.ecommerce.spring.common.event;
 
-import com.ecommerce.shared.event.publish.DomainEventPublisher;
+import com.ecommerce.shared.event.DomainEventPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 

@@ -1,6 +1,6 @@
-package com.ecommerce.spring.common.event.consume;
+package com.ecommerce.spring.common.event.messaging.rabbit;
 
-import com.ecommerce.shared.event.consume.DomainEventConsumingWrapper;
+import com.ecommerce.shared.event.DomainEventConsumingWrapper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

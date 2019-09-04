@@ -1,6 +1,4 @@
-package com.ecommerce.spring.common.event.consume;
-
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+package com.ecommerce.spring.common.event.messaging.kafka;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,6 +7,5 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@RabbitListener(queues = {"#{'${ecommerce.rabbit.receiveQ}'}"})
-public @interface EcommerceRabbitListener {
+public @interface EcommerceKafkaListener {
 }

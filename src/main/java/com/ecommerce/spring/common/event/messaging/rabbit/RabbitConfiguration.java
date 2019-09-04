@@ -1,11 +1,8 @@
-package com.ecommerce.spring.common.configuration.rabbit;
+package com.ecommerce.spring.common.event.messaging.rabbit;
 
-import com.ecommerce.shared.event.consume.DomainEventConsumingWrapper;
-import com.ecommerce.shared.event.publish.DomainEventPublisher;
-import com.ecommerce.shared.event.publish.DomainEventSender;
-import com.ecommerce.spring.common.event.consume.RabbitDomainEventRecordingConsumerAspect;
-import com.ecommerce.spring.common.event.publish.RabbitDomainEventPublishAspect;
-import com.ecommerce.spring.common.event.publish.RabbitDomainEventSender;
+import com.ecommerce.shared.event.DomainEventConsumingWrapper;
+import com.ecommerce.shared.event.DomainEventPublisher;
+import com.ecommerce.shared.event.DomainEventSender;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.amqp.core.Binding;
@@ -30,17 +27,19 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.interceptor.RetryOperationsInterceptor;
 
+import static com.google.common.collect.ImmutableMap.of;
+
 // For every services, you must bind your own receive-q to the exchanges that you want to receive message from
 @Configuration
 //@ConditionalOnClass({RabbitTemplate.class, Channel.class})
 @EnableConfigurationProperties(EcommerceRabbitProperties.class)
 public class RabbitConfiguration {
-    private EcommerceRabbitProperties properties;
+    private EcommerceRabbitProperties ecommerceRabbitProperties;
     private RabbitProperties rabbitProperties;
 
-    public RabbitConfiguration(EcommerceRabbitProperties properties,
+    public RabbitConfiguration(EcommerceRabbitProperties ecommerceRabbitProperties,
                                RabbitProperties rabbitProperties) {
-        this.properties = properties;
+        this.ecommerceRabbitProperties = ecommerceRabbitProperties;
         this.rabbitProperties = rabbitProperties;
     }
 
@@ -105,19 +104,26 @@ public class RabbitConfiguration {
     //"发送方Exchange"
     @Bean
     public TopicExchange publishExchange() {
-        return new TopicExchange(properties.getPublishX(), true, false, ImmutableMap.of("alternate-exchange", properties.getPublishDlx()));
+        return new TopicExchange(ecommerceRabbitProperties.getPublishX(),
+                true,
+                false,
+                of("alternate-exchange", ecommerceRabbitProperties.getPublishDlx()));
     }
 
     //"发送方DLX"，消息发送失败时传到该DLX
     @Bean
     public TopicExchange publishDlx() {
-        return new TopicExchange(properties.getPublishDlx(), true, false, null);
+        return new TopicExchange(ecommerceRabbitProperties.getPublishDlx(), true, false, null);
     }
 
     //"发送方DLQ"，所有发到"发送DLX"的消息都将路由到该DLQ
     @Bean
     public Queue publishDlq() {
-        return new Queue(properties.getPublishDlq(), true, false, false, ImmutableMap.of("x-queue-mode", "lazy"));
+        return new Queue(ecommerceRabbitProperties.getPublishDlq(),
+                true,
+                false,
+                false,
+                of("x-queue-mode", "lazy"));
     }
 
     //"发送方DLQ"绑定到"发送方DLX"
@@ -129,30 +135,30 @@ public class RabbitConfiguration {
     //接收方的所有消息都发送到该"接收方Queue"，即"接收方Queue"可以绑定多个"发送方Exchange"
     @Bean
     public Queue receiveQ() {
-        ImmutableMap<String, Object> args = ImmutableMap.of(
+        ImmutableMap<String, Object> args = of(
                 "x-dead-letter-exchange",
-                properties.getReceiveDlx(),
+                ecommerceRabbitProperties.getReceiveDlx(),
                 "x-overflow",
                 "drop-head",
                 "x-max-length",
                 300000,
                 "x-message-ttl",
                 24 * 60 * 60 * 1000);
-        return new Queue(properties.getReceiveQ(), true, false, false, args);
+        return new Queue(ecommerceRabbitProperties.getReceiveQ(), true, false, false, args);
     }
 
 
     //"接收方DLX"，消息处理失败时传到该DLX
     @Bean
     public TopicExchange receiveDlx() {
-        return new TopicExchange(properties.getReceiveDlx(), true, false, null);
+        return new TopicExchange(ecommerceRabbitProperties.getReceiveDlx(), true, false, null);
     }
 
 
     //"接收方DLQ"，所有发到"接收DLX"的消息都将路由到该DLQ
     @Bean
     public Queue receiveDlq() {
-        return new Queue(properties.getReceiveDlq(), true, false, false, ImmutableMap.of("x-queue-mode", "lazy"));
+        return new Queue(ecommerceRabbitProperties.getReceiveDlq(), true, false, false, of("x-queue-mode", "lazy"));
     }
 
     //"接收方DLQ"绑定到"接收方DLX"
@@ -165,7 +171,7 @@ public class RabbitConfiguration {
     //"接收方恢复Exchange"，用于手动将"接收方DLQ"中的消息发到该DLX进行重试
     @Bean
     public TopicExchange receiveRecoverExchange() {
-        return new TopicExchange(properties.getReceiveRecoverX(), true, false, null);
+        return new TopicExchange(ecommerceRabbitProperties.getReceiveRecoverX(), true, false, null);
     }
 
     //"接收方Queue"绑定到"接收方恢复Exchange"

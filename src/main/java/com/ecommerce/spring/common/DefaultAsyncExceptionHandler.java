@@ -1,4 +1,4 @@
-package com.ecommerce.spring.common.configuration;
+package com.ecommerce.spring.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;

@@ -1,4 +1,4 @@
-package com.ecommerce.spring.common.configuration.rabbit;
+package com.ecommerce.spring.common.event.messaging.rabbit;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

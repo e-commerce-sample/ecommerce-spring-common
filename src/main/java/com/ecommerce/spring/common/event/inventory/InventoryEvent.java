@@ -10,7 +10,7 @@ public abstract class InventoryEvent extends DomainEvent {
 
 
     protected InventoryEvent(String productId) {
-        super();
+        super("Inventory");
         this.productId = productId;
     }
 

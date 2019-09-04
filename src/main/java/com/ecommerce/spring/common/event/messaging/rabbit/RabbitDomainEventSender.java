@@ -1,21 +1,20 @@
-package com.ecommerce.spring.common.event.publish;
+package com.ecommerce.spring.common.event.messaging.rabbit;
 
 import com.ecommerce.shared.event.DomainEvent;
-import com.ecommerce.shared.event.publish.DomainEventSender;
-import com.ecommerce.spring.common.configuration.rabbit.EcommerceRabbitProperties;
+import com.ecommerce.shared.event.DomainEventSender;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.transaction.annotation.Transactional;
 
 public class RabbitDomainEventSender implements DomainEventSender {
     private final RabbitTemplate rabbitTemplate;
-    private final EcommerceRabbitProperties properties;
+    private final EcommerceRabbitProperties ecommerceRabbitProperties;
 
 
     public RabbitDomainEventSender(MessageConverter messageConverter,
-                                   EcommerceRabbitProperties properties,
+                                   EcommerceRabbitProperties ecommerceRabbitProperties,
                                    RabbitTemplate rabbitTemplate) {
-        this.properties = properties;
+        this.ecommerceRabbitProperties = ecommerceRabbitProperties;
         rabbitTemplate.setMessageConverter(messageConverter);
         rabbitTemplate.setChannelTransacted(true);
         this.rabbitTemplate = rabbitTemplate;
@@ -23,7 +22,7 @@ public class RabbitDomainEventSender implements DomainEventSender {
 
     @Transactional(transactionManager = "rabbitTransactionManager")
     public void send(DomainEvent event) {
-        String exchange = properties.getPublishX();
+        String exchange = ecommerceRabbitProperties.getPublishX();
         String routingKey = event.getClass().getName();
         rabbitTemplate.convertAndSend(exchange, routingKey, event);
     }

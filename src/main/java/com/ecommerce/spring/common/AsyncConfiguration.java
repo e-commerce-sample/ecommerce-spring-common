@@ -1,4 +1,4 @@
-package com.ecommerce.spring.common.configuration;
+package com.ecommerce.spring.common;
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;

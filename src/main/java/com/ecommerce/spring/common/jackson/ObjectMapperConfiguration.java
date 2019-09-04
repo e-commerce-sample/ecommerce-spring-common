@@ -1,6 +1,5 @@
-package com.ecommerce.spring.common.configuration;
+package com.ecommerce.spring.common.jackson;
 
-import com.ecommerce.shared.utils.DefaultObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

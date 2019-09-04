@@ -1,4 +1,4 @@
-package com.ecommerce.spring.common.configuration;
+package com.ecommerce.spring.common;
 
 import com.ecommerce.shared.utils.DistributedLockExecutor;
 import net.javacrumbs.shedlock.core.LockProvider;

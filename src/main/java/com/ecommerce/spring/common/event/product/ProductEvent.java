@@ -9,7 +9,7 @@ public abstract class ProductEvent extends DomainEvent {
     private String productId;
 
     public ProductEvent(String productId) {
-        super();
+        super("Product");
         this.productId = productId;
     }
 
