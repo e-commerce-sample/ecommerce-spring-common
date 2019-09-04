@@ -2,7 +2,7 @@ package com.ecommerce.spring.common.event.recording.jdbc;
 
 import com.ecommerce.shared.event.DomainEvent;
 import com.ecommerce.shared.event.DomainEventRecorder;
-import com.ecommerce.spring.common.jackson.DefaultObjectMapper;
+import com.ecommerce.shared.jackson.DefaultObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
