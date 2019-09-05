@@ -1,8 +1,8 @@
 package com.ecommerce.spring.common.event.messaging.rabbit;
 
-import com.ecommerce.shared.event.DomainEventConsumingWrapper;
 import com.ecommerce.shared.event.DomainEventPublisher;
 import com.ecommerce.shared.event.DomainEventSender;
+import com.ecommerce.spring.common.event.DomainEventConsumingTransactionAdapter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.amqp.core.Binding;
@@ -189,8 +189,8 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public RabbitDomainEventRecordingConsumerAspect rabbitDomainEventRecordingConsumerAspect(DomainEventConsumingWrapper eventConsumingWrapper) {
-        return new RabbitDomainEventRecordingConsumerAspect(eventConsumingWrapper);
+    public RabbitDomainEventRecordingConsumerAspect rabbitDomainEventRecordingConsumerAspect(DomainEventConsumingTransactionAdapter adapter) {
+        return new RabbitDomainEventRecordingConsumerAspect(adapter);
     }
 
     @Bean

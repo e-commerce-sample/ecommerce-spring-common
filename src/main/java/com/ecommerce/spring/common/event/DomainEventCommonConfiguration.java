@@ -26,6 +26,11 @@ public class DomainEventCommonConfiguration {
     }
 
     @Bean
+    public DomainEventConsumingTransactionAdapter domainEventConsumingTransactionAdapter(DomainEventConsumingWrapper wrapper){
+        return new DomainEventConsumingTransactionAdapter(wrapper);
+    }
+
+    @Bean
     public DomainEventBackupPublishScheduler domainEventBackupPublishScheduler(DomainEventPublisher eventPublisher) {
         return new DomainEventBackupPublishScheduler(eventPublisher);
     }
