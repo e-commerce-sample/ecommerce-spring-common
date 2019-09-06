@@ -29,6 +29,6 @@ public class RabbitDomainEventPublishAspect {
             "@annotation(com.ecommerce.spring.common.event.messaging.rabbit.EcommerceRabbitListener)")
     public void publishEvents(JoinPoint joinPoint) {
         log.debug("Trigger domain event publish process.");
-        taskExecutor.execute(() -> publisher.publish());
+        taskExecutor.execute(() -> publisher.publishNextBatch());
     }
 }

@@ -16,7 +16,7 @@ public class DomainEventBackupPublishScheduler {
     @Scheduled(fixedDelay = 120000)
     public void run() {
         log.info("Scheduled trigger domain event backup publish process.");
-        publisher.publish();
+        publisher.publishNextBatch();
     }
 
 }

@@ -1,8 +1,9 @@
 package com.ecommerce.spring.common.event;
 
-import com.ecommerce.shared.event.DomainEventConsumingWrapper;
+import com.ecommerce.shared.event.DefaultDomainEventPublisher;
+import com.ecommerce.shared.event.DomainEventConsumeRecorder;
+import com.ecommerce.shared.event.DomainEventDao;
 import com.ecommerce.shared.event.DomainEventPublisher;
-import com.ecommerce.shared.event.DomainEventRecorder;
 import com.ecommerce.shared.event.DomainEventSender;
 import com.ecommerce.shared.utils.DistributedLockExecutor;
 import org.springframework.context.annotation.Bean;
@@ -12,26 +13,22 @@ import org.springframework.context.annotation.Configuration;
 public class DomainEventCommonConfiguration {
 
     @Bean
-    public DomainEventPublisher domainEventPublisher(DomainEventRecorder eventRecorder,
+    public DomainEventPublisher domainEventPublisher(DomainEventDao eventDao,
                                                      DistributedLockExecutor lockExecutor,
                                                      DomainEventSender eventSender) {
-        return new DomainEventPublisher(eventRecorder,
+        return new DefaultDomainEventPublisher(eventDao,
                 lockExecutor,
                 eventSender);
-    }
-
-    @Bean
-    public DomainEventConsumingWrapper domainEventConsumingWrapper(DomainEventRecorder eventRecorder) {
-        return new DomainEventConsumingWrapper(eventRecorder);
-    }
-
-    @Bean
-    public DomainEventConsumingTransactionAdapter domainEventConsumingTransactionAdapter(DomainEventConsumingWrapper wrapper){
-        return new DomainEventConsumingTransactionAdapter(wrapper);
     }
 
     @Bean
     public DomainEventBackupPublishScheduler domainEventBackupPublishScheduler(DomainEventPublisher eventPublisher) {
         return new DomainEventBackupPublishScheduler(eventPublisher);
     }
+
+    @Bean
+    public DomainEventConsumeWrapper domainEventConsumingWrapper(DomainEventConsumeRecorder eventRecorder) {
+        return new DomainEventConsumeWrapper(eventRecorder);
+    }
+
 }
