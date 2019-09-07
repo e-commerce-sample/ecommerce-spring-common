@@ -61,7 +61,7 @@ public class DefaultDomainEventPublisher implements DomainEventPublisher {
                 return null;
             });
         } catch (Throwable e) {
-            log.error("Error while publish domain events:{}", e.getMessage());
+            log.warn("Error while publish domain events:{}", e.getMessage());
         }
     }
 
