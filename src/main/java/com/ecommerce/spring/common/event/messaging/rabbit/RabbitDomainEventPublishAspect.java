@@ -39,7 +39,7 @@ public class RabbitDomainEventPublishAspect {
             "@annotation(org.springframework.amqp.rabbit.annotation.RabbitListener) ||" +
             "@annotation(com.ecommerce.spring.common.event.messaging.rabbit.EcommerceRabbitListener)")
     public void publishEvents(JoinPoint joinPoint) {
-        log.debug("Trigger domain event publish process using AOP.");
+        log.info("Trigger domain event publish process using Spring AOP.");
         taskExecutor.execute(() -> publisher.publishNextBatch());
     }
 }

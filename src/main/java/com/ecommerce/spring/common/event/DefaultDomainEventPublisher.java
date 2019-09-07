@@ -71,7 +71,7 @@ public class DefaultDomainEventPublisher implements DomainEventPublisher {
         newestEvents.forEach(event -> {
             try {
                 sender.send(event);
-                log.debug("Published {}.", event);
+                log.info("Published {}.", event);
                 eventDao.markAsPublished(event.getId());
             } catch (Throwable t) {
                 log.error("Error while publish domain event {}.", event, t);
