@@ -1,6 +1,5 @@
 package com.ecommerce.spring.common.event;
 
-import com.ecommerce.shared.event.DefaultDomainEventPublisher;
 import com.ecommerce.shared.event.DomainEventConsumeRecorder;
 import com.ecommerce.shared.event.DomainEventDao;
 import com.ecommerce.shared.event.DomainEventPublisher;

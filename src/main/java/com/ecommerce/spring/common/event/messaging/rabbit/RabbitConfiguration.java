@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.interceptor.RetryOperationsInterceptor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import static com.google.common.collect.ImmutableMap.of;
 
@@ -77,8 +78,7 @@ public class RabbitConfiguration {
 
     @Bean
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory,
-                                                                               MessageConverter messageConverter,
-                                                                               TaskExecutor taskExecutor) {
+                                                                               MessageConverter messageConverter) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setDefaultRequeueRejected(false);
@@ -86,6 +86,7 @@ public class RabbitConfiguration {
         factory.setConcurrentConsumers(rabbitProperties.getListener().getSimple().getConcurrency());
         factory.setMaxConcurrentConsumers(rabbitProperties.getListener().getSimple().getMaxConcurrency());
         factory.setMessageConverter(messageConverter);
+        factory.setTaskExecutor(taskExecutor());
 
         FixedBackOffPolicy fixedBackOffPolicy = new FixedBackOffPolicy();
         fixedBackOffPolicy.setBackOffPeriod(1000L);
@@ -96,10 +97,18 @@ public class RabbitConfiguration {
                 .build();
         factory.setAdviceChain(retryOperationsInterceptor);
 
-        factory.setTaskExecutor(taskExecutor);
         return factory;
     }
 
+
+    private TaskExecutor taskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(20);
+        executor.setThreadNamePrefix("rabbitmq-listener-executor-");
+        executor.initialize();
+        return executor;
+    }
 
     //"发送方Exchange"
     @Bean
@@ -189,9 +198,8 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public RabbitDomainEventPublishAspect rabbitDomainEventPublishAspect(TaskExecutor taskExecutor,
-                                                                         DomainEventPublisher publisher) {
-        return new RabbitDomainEventPublishAspect(taskExecutor, publisher);
+    public RabbitDomainEventPublishAspect rabbitDomainEventPublishAspect(DomainEventPublisher publisher) {
+        return new RabbitDomainEventPublishAspect(publisher);
     }
 
     @Bean
