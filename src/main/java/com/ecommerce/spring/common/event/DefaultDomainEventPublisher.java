@@ -72,10 +72,10 @@ public class DefaultDomainEventPublisher implements DomainEventPublisher {
             try {
                 sender.send(event);
                 log.info("Published {}.", event);
-                eventDao.markAsPublished(event.getId());
+                eventDao.markAsPublished(event.get_id());
             } catch (Throwable t) {
                 log.error("Error while publish domain event {}.", event, t);
-                eventDao.markAsPublishFailed(event.getId());
+                eventDao.markAsPublishFailed(event.get_id());
             }
         });
         return null;

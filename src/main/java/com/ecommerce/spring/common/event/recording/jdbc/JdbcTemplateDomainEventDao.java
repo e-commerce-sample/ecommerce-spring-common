@@ -34,7 +34,7 @@ public class JdbcTemplateDomainEventDao implements DomainEventDao {
         SqlParameterSource[] parameters = events.stream()
                 .map((Function<DomainEvent, SqlParameterSource>) domainEvent ->
                         new MapSqlParameterSource()
-                                .addValue("id", domainEvent.getId())
+                                .addValue("id", domainEvent.get_id())
                                 .addValue("json", objectMapper.writeValueAsString(domainEvent)))
                 .toArray(SqlParameterSource[]::new);
 

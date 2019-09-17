@@ -23,7 +23,7 @@ public class JdbcTemplateDomainEventConsumeRecorder implements DomainEventConsum
     @Override
     public boolean record(DomainEvent event) {
         String sql = "INSERT INTO DOMAIN_EVENT_RECEIVE_RECORD (EVENT_ID) VALUES (:eventId);";
-        String eventId = event.getId();
+        String eventId = event.get_id();
         try {
             jdbcTemplate.update(sql, of("eventId", eventId));
             return true;
